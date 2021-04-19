@@ -1,0 +1,84 @@
+{% extends 'back.html.twig' %}
+
+{% block title %}Sujet index{% endblock %}
+
+{% block body %}
+    <h1>Sujet index</h1>
+    <script src="{{ asset('Front/js/jquery.min.js') }}"></script>
+
+    <table  id="tableac" class="table">
+        <thead>
+        <tr>
+            <th>
+
+                Recherche :
+            </th>
+
+            <th>
+
+                <input type="text" id="search" class="form-control" placeholder="Search">
+
+            </th>
+        </tr>
+        </thead>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for sujet in sujets %}
+            <tr>
+                <td>{{ sujet.id }}</td>
+                <td>{{ sujet.name }}</td>
+                <td>
+                    <a href="{{ path('sujet_show', {'id': sujet.id}) }}">show</a>
+                    <a href="{{ path('sujet_edit', {'id': sujet.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        <script>
+            $(document).ready(function(){
+                $('#search').keyup(function(){
+                    search_table($(this).val());
+                });
+                function search_table(value){
+                    $('#tableac tbody tr').each(function(){
+                        var found = 'false';
+                        $(this).each(function(){
+                            if($(this).text().toLowerCase().indexOf(value.toLowerCase()) >= 0)
+                            {
+                                found = 'true';
+                            }
+                        });
+                        if(found == 'true')
+                        {
+                            $(this).show();
+
+                        }
+                        else
+                        {
+                            $(this).hide();
+
+                        }
+                    });
+                }
+            });
+        </script>
+        </tbody>
+    </table>
+
+
+
+
+    <div id="allx" ></div>
+    <a href="{{ path('sujet_new') }}">Create new</a>
+
+
+{% endblock %}

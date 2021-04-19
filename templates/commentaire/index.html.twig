@@ -1,0 +1,88 @@
+{% extends 'front.html.twig' %}
+{% block title %}
+    Commentaire index{% endblock %}
+{% block test %} <h2> Commentaire  </h2> {% endblock %}
+{% block body %}
+    <script src="{{ asset('Front/js/jquery.min.js') }}"></script>
+    <table id="tableac" class="table">
+
+<thead>
+<tr>
+    <th>
+
+        Recherche :
+    </th>
+
+    <th>
+
+        <input type="text" id="search" class="form-control" placeholder="Search">
+
+    </th>
+</tr>
+</thead>
+        <thead>
+
+        <tr>
+
+                <th>Id</th>
+                <th>Commentaire</th>
+
+                <th>actions</th>
+                <th>Rating</th>
+
+            </tr>
+        </thead>
+        <tbody>
+        {% for commentaire in commentaires %}
+            <tr>
+                <td>{{ commentaire.id }}</td>
+                <td>{{ commentaire.commentaire }}</td>
+
+                <td>
+                    <a href="{{ path('commentaire_show', {'id': commentaire.id}) }}" style="color: #1a1a1a">show</a>
+                    <a href="{{ path('commentaire_edit', {'id': commentaire.id}) }}" style="color: #1a1a1a">edit</a>
+                </td>
+                <td>{{ commentaire.rating }}</td>
+
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        <script>
+            $(document).ready(function(){
+                $('#search').keyup(function(){
+                    search_table($(this).val());
+                });
+                function search_table(value){
+                    $('#tableac tbody tr').each(function(){
+                        var found = 'false';
+                        $(this).each(function(){
+                            if($(this).text().toLowerCase().indexOf(value.toLowerCase()) >= 0)
+                            {
+                                found = 'true';
+                            }
+                        });
+                        if(found == 'true')
+                        {
+                            $(this).show();
+
+                        }
+                        else
+                        {
+                            $(this).hide();
+
+                        }
+                    });
+                }
+            });
+        </script>
+
+        </tbody>
+    </table>
+
+
+   <h1>  <a href="{{ path('commentaire_new') }}"   style="color: #1a1a1a">Create new</a> </h1>
+
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'front.html.twig' %}
+
+{% block title %}Hello ChartController!{% endblock %}
+
+{% block body %}
+    <div id="div_chart"></div>
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        {{ gc_draw(pieChart, 'div_chart') }}
+    </script>
+{% endblock %}
